@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 
@@ -50,7 +53,8 @@ import java.util.Collections;
 @Timed
 public class UserController 
 {
-	Logging logging = LoggingOptions.getDefaultInstance().getService();
+
+  static Logging logging = LoggingOptions.getDefaultInstance().getService();
 	//Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	static String logName = "error-log";
@@ -58,24 +62,19 @@ public class UserController
 	static String error="HttpStatus.NOT_FOUND";
 	
 	static String ok="HttpStatus.OK";
-	/*
-    Map<String, String> resourceLables = new HashMap<>();
-    resourceLables.put("project_id","wipro-gcp-parsnet-poc");
-    resourceLables.put("cluster_name","latecny-metric");
-    resourceLables.put("pod_name"," ");*/
 
 	static LogEntry entry = LogEntry.newBuilder(StringPayload.of(error))
 	        .setSeverity(Severity.ERROR)
 	        .setLogName(logName)
 	        .setHttpRequest(HttpRequest.newBuilder().setStatus(404).build())
-            .setResource(MonitoredResource.newBuilder("global").build())
+            .setResource(MonitoredResource.newBuilder("k8s_container").addLabel("project_id","wipro-gcp-parsnet-poc").addLabel("location","us-central1-a").addLabel("cluster_name","latency-metric").build())
 	        .build();
 	
 	static LogEntry entry1 = LogEntry.newBuilder(StringPayload.of(ok))
 	        .setSeverity(Severity.INFO)
 	        .setLogName(logName)
 	        .setHttpRequest(HttpRequest.newBuilder().setStatus(200).build())
-            .setResource(MonitoredResource.newBuilder("global").build())
+            .setResource(MonitoredResource.newBuilder("k8s_container").build())
 	        .build();
 
 @Autowired
