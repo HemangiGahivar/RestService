@@ -67,14 +67,14 @@ public class UserController
 	        .setSeverity(Severity.ERROR)
 	        .setLogName(logName)
 	        .setHttpRequest(HttpRequest.newBuilder().setStatus(404).build())
-            .setResource(MonitoredResource.newBuilder("k8s_container").addLabel("project_id","wipro-gcp-parsnet-poc").addLabel("location","us-central1-a").addLabel("cluster_name","latency-metric").build())
+            .setResource(MonitoredResource.newBuilder("k8s_container").addLabel("project_id","wipro-gcp-parsnet-poc").addLabel("location","us-central1-a").addLabel("cluster_name","latency-metric").addLabel("namespace_name","shubham").addLabel("pod_name","log-latency").build())
 	        .build();
 	
 	static LogEntry entry1 = LogEntry.newBuilder(StringPayload.of(ok))
 	        .setSeverity(Severity.INFO)
 	        .setLogName(logName)
 	        .setHttpRequest(HttpRequest.newBuilder().setStatus(200).build())
-            .setResource(MonitoredResource.newBuilder("k8s_container").build())
+            .setResource(MonitoredResource.newBuilder("k8s_container").addLabel("project_id","wipro-gcp-parsnet-poc").addLabel("location","us-central1-a").addLabel("cluster_name","latency-metric").addLabel("namespace_name","shubham").addLabel("pod_name","log-latency").build())
 	        .build();
 
 @Autowired
